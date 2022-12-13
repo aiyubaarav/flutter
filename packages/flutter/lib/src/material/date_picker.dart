@@ -2832,6 +2832,8 @@ class _InputDateRangePickerState extends State<_InputDateRangePicker> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     final MaterialLocalizations localizations = MaterialLocalizations.of(context);
+    _startInputText = "";
+    _endInputText = "";
     if (_startDate != null) {
       _startInputText = localizations.formatCompactDate(_startDate!);
       final bool selectText = widget.autofocus && !_autoSelected;
@@ -2851,9 +2853,17 @@ class _InputDateRangePickerState extends State<_InputDateRangePicker> {
   /// Will return true if the range is valid. If not, it will
   /// return false and display an appropriate error message under one of the
   /// text fields.
-  bool validate() {
+   bool validate() {
+    String? startDateStringError = _validateField(_startInputText);
+    String? endDateStringError = _validateField(_endInputText);
     String? startError = _validateDate(_startDate);
-    final String? endError = _validateDate(_endDate);
+    String? endError = _validateDate(_endDate);
+    if (startDateStringError != null) {
+      startError = startDateStringError;
+    }
+    if (endDateStringError != null) {
+      endError = endDateStringError;
+    }
     if (startError == null && endError == null) {
       if (_startDate!.isAfter(_endDate!)) {
         startError = widget.errorInvalidRangeText ?? MaterialLocalizations.of(context).invalidDateRangeLabel;
@@ -2870,7 +2880,13 @@ class _InputDateRangePickerState extends State<_InputDateRangePicker> {
     final MaterialLocalizations localizations = MaterialLocalizations.of(context);
     return localizations.parseCompactDate(text);
   }
-
+  String? _validateField(String? date) {
+    if (date == null || date.trim() == "")
+    {
+        return widget.errorFormatText ?? MaterialLocalizations.of(context).emptyDateLabel;
+    }
+    return null;
+  }
   String? _validateDate(DateTime? date) {
     if (date == null) {
       return widget.errorFormatText ?? MaterialLocalizations.of(context).invalidDateFormatLabel;
