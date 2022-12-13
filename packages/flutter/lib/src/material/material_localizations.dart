@@ -243,7 +243,8 @@ abstract class MaterialLocalizations {
 
   /// Formats day of week, month, day of month and year in a long-width format.
   ///
-  /// Does not abbreviate names. Appears in spoken announcements of the date
+  /// Does not abbreviate names. Appears in spoken announcements of the 
+  
   /// picker invoked using [showDatePicker], when accessibility mode is on.
   ///
   /// Examples:
@@ -346,6 +347,10 @@ abstract class MaterialLocalizations {
   /// in an [InputDatePickerFormField] that is not in a valid date format.
   String get invalidDateFormatLabel;
 
+  /// Error message displayed to the user when they have Empty field
+  /// in an [InputDatePickerFormField] that there is emoty field.
+  String get emptyDateLabel;
+  
   /// Error message displayed to the user when they have entered an invalid
   /// date range in the input mode of the date range picker created with
   /// [showDateRangePicker].
@@ -864,6 +869,9 @@ class DefaultMaterialLocalizations implements MaterialLocalizations {
 
   @override
   String get invalidDateFormatLabel => 'Invalid format.';
+  
+  @override
+  String get emptyDateLabel => 'This Field is Required.';
 
   @override
   String get invalidDateRangeLabel => 'Invalid range.';
